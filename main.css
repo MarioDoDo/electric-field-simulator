@@ -1,0 +1,88 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .panel {
+    width: 60vw;
+    height: 10vh;
+    background: white;
+    position: absolute;
+    bottom: 0;
+    left: 20vw;
+    border-radius: 1vw;
+    display: grid;
+    align-content: center;
+    grid-auto-flow: column;
+    justify-items: center;
+  }
+
+  .Q {
+    width: calc(2vw + 3vh);
+    height: calc(2vw + 3vh);
+    line-height: calc(2vw + 3vh);
+    border-radius: 50%;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+    font-size: 2rem;
+  }
+img{
+  width: calc(2vw + 3vh);
+  height: calc(2vw + 3vh);
+}
+  .positiveS,
+  .positiveT {
+    background: red;
+  }
+
+  .negativeS,
+  .negativeT {
+    background: blue;
+  }
+
+  svg *,
+  svg *:active {
+    cursor: pointer;
+  }
+  .options{
+    background: none;
+    border: none;
+    opacity: 0.5;
+  }
+  .controls{
+      position: absolute;
+      width: 20vw;
+      height: 50vh;
+      top: 39vh;
+      left: 20vw;
+      border-radius: 1vw;
+      background: white;
+      display: none;
+  }
+  button{
+    background: none;
+    border: none;
+  }
+  .stop {
+    background: none;
+    border: none;
+    opacity: 0.5;
+  }
+  .anim {
+    background: none;
+    border: none;
+    opacity: 0.5;
+  }
+  .clear {
+    background: none;
+    border: none;
+    opacity: 0.5;
+  }

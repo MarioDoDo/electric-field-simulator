@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electric field simulation</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <svg id="out">
+    <defs>
+      <marker id="white" markerWidth="5" markerHeight="3" refX="0" refY="1.5" orient="auto" fill="white">
+        <polygon points="0 0, 5 1.5, 0 3" />
+      </marker>
+      <marker id="red" markerWidth="5" markerHeight="3" refX="0" refY="1.5" orient="auto" fill="red">
+        <polygon points="0 0, 5 1.5, 0 3" />
+      </marker>
+    </defs>
+  </svg>
+  <div class="controls">
+
+    <label>Test charges have mass</label>
+    <input id="Tmass" type="checkbox" oninput="draw()" />
+
+
+    <label>Speed of test charges</label>
+    <input id="speed" type="range" min="5" max="30" oninput="setSpeed()" />
+
+    <label>Test charges are removed in oposite static charge</label>
+    <input id="staticEnd" type="checkbox" oninput="anim()" checked/>
+    <label>Field lines *hard to render</label>
+    <input id="fieldLines" type="checkbox" oninput="draw()" checked />
+    <label>Density of field lines</label>
+    <input id="linesCount" type="range" min="1" max="40" oninput="draw()" />
+    <label>Lenght of filed lines</label>
+    <input id="lenght" type="range" min="20" max="300" oninput="draw()" />
+    <label>Quality of field lines</label>
+    <input id="linesQuality" min="1" max="10" type="range" oninput="draw()" />
+
+    <label>Save as svg * for presentation</label>
+    <button class="save" onclick="save()"><img style="width: 10%;" src="assets/save.svg" alt="saveAsSVG" /></button>
+  </div>
+  <div class="panel">
+
+    <button class="options" onclick="toggleControls()"><img src="assets/options.svg" alt="options" /></button>
+    <button class="clear"><img style="width: 50px;" src="assets/clear.svg" alt="clear" /></button>
+    <button class="stop" onclick="stop()"><img src="assets/stop.svg" alt="stopAnimation" /></button>
+    <button class="anim" onclick="anim()"><img src="assets/anim.svg" alt="startAnimation" /></button>
+
+    <div class="Q positiveS" draggable="true">S</div>
+    <div class="Q negativeS" draggable="true">S</div>
+    <div class="Q positiveT" draggable="true">T</div>
+    <div class="Q negativeT" draggable="true">T</div>
+
+  </div>
+</body>
+<script src="core.js"></script>
+<script src="controls.js"></script>
+</html>

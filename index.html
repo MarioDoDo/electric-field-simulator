@@ -1,60 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Electric field simulation</title>
-  <link rel="stylesheet" href="main.css">
-</head>
-<body>
-  <svg id="out">
-    <defs>
-      <marker id="white" markerWidth="5" markerHeight="3" refX="0" refY="1.5" orient="auto" fill="white">
-        <polygon points="0 0, 5 1.5, 0 3" />
-      </marker>
-      <marker id="red" markerWidth="5" markerHeight="3" refX="0" refY="1.5" orient="auto" fill="red">
-        <polygon points="0 0, 5 1.5, 0 3" />
-      </marker>
-    </defs>
-  </svg>
-  <div class="controls">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Electric field simulation</title>
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <svg id="out">
+      <defs>
+        <marker
+          id="primary"
+          markerWidth="5"
+          markerHeight="3"
+          refX="0"
+          refY="1.5"
+          orient="auto"
+          fill="white"
+        >
+          <polygon points="0 0, 5 1.5, 0 3" />
+        </marker>
+        <marker
+          id="secondary"
+          markerWidth="5"
+          markerHeight="3"
+          refX="0"
+          refY="1.5"
+          orient="auto"
+          fill="red"
+        >
+          <polygon points="0 0, 5 1.5, 0 3" />
+        </marker>
+        <marker
+          id="positiveGridVector"
+          markerWidth="5"
+          markerHeight="3"
+          refX="0"
+          refY="1.5"
+          orient="auto"
+          fill="red"
+        >
+          <polygon points="0 0, 5 1.5, 0 3" />
+        </marker>
+        <marker
+          id="negativeGridVector"
+          markerWidth="5"
+          markerHeight="3"
+          refX="0"
+          refY="1.5"
+          orient="auto"
+          fill="blue"
+        >
+          <polygon points="0 0, 5 1.5, 0 3" />
+        </marker>
+      </defs>
+    </svg>
+    <div class="controls">
+      <label>Test charges have mass</label>
+      <input id="Tmass" type="checkbox" oninput="draw()" />
 
-    <label>Test charges have mass</label>
-    <input id="Tmass" type="checkbox" oninput="draw()" />
+      <label>Interval tick</label>
+      <input id="speed" type="range" min="5" max="30" oninput="setSpeed()" />
 
+      <label>Test charges are removed in oposite static charge</label>
+      <input id="staticEnd" type="checkbox" checked />
+      <label>Grid</label>
+      <input id="grid" type="checkbox" oninput="draw()" />
+      <label>Field lines</label>
+      <input id="fieldLines" type="checkbox" oninput="draw()" checked />
+      <label>Density of field lines</label>
+      <input id="linesCount" type="range" min="5" max="20" oninput="draw()" />
+      <label>Steps</label>
+      <input id="lenght" type="range" min="20" max="200" oninput="draw()" />
+      <label>Step length</label>
+      <input id="linesQuality" min="1" max="15" type="range" oninput="draw()" />
 
-    <label>Speed of test charges</label>
-    <input id="speed" type="range" min="5" max="30" oninput="setSpeed()" />
+      <label>Background</label>
+      <input id="background" type="color" oninput="bgChange(this.value)" />
+      <label>Color of field Lines</label>
+      <input
+        id="fieldLinesColor"
+        type="color"
+        oninput="change(this.value, 'fieldLinesColor')"
+      />
+      <label>Primary vector</label>
+      <input
+        id="primaryVector"
+        type="color"
+        oninput="change(this.value, 'primaryVector')"
+      />
+      <label>Secondary vector</label>
+      <input
+        id="secondaryVector"
+        type="color"
+        oninput="change(this.value, 'secondaryVector')"
+      />
+      <label>Color of positive charge</label>
+      <input
+        id="positive"
+        type="color"
+        oninput="change(this.value, 'positive')"
+      />
+      <label>Color of negative charge</label>
+      <input
+        id="negative"
+        type="color"
+        oninput="change(this.value, 'negative')"
+      />
+      <label>Color of centerGrid</label>
+      <input
+        id="gridCenter"
+        type="color"
+        oninput="change(this.value, 'gridCenter')"
+      />
+      <label>Color of positiveGrid</label>
+      <input
+        id="positiveGrid"
+        type="color"
+        oninput="change(this.value, 'positiveGrid')"
+      />
+      <label>Color of negativeGrid</label>
+      <input
+        id="negativeGrid"
+        type="color"
+        oninput="change(this.value, 'negativeGrid')"
+      />
 
-    <label>Test charges are removed in oposite static charge</label>
-    <input id="staticEnd" type="checkbox" oninput="anim()" checked/>
-    <label>Field lines *hard to render</label>
-    <input id="fieldLines" type="checkbox" oninput="draw()" checked />
-    <label>Density of field lines</label>
-    <input id="linesCount" type="range" min="1" max="40" oninput="draw()" />
-    <label>Lenght of filed lines</label>
-    <input id="lenght" type="range" min="20" max="300" oninput="draw()" />
-    <label>Quality of field lines</label>
-    <input id="linesQuality" min="1" max="10" type="range" oninput="draw()" />
+      <div>
+        <button onclick="resetColors('dark')">Dark</button>
+        <button onclick="resetColors('light')">Light</button>
+      </div>
 
-    <label>Save as svg * for presentation</label>
-    <button class="save" onclick="save()"><img style="width: 10%;" src="assets/save.svg" alt="saveAsSVG" /></button>
-  </div>
-  <div class="panel">
+      <label>Save as svg</label>
+      <button class="save" onclick="save()">
+        <img style="width: 10%" src="assets/save.svg" alt="saveAsSVG" />
+      </button>
+    </div>
+    <div class="panel">
+      <button class="options" onclick="toggleControls()">
+        <img src="assets/options.svg" alt="options" />
+      </button>
+      <button class="clear">
+        <img style="width: 50px" src="assets/clear.svg" alt="clear" />
+      </button>
+      <button class="stop" onclick="stop()">
+        <img src="assets/stop.svg" alt="stopAnimation" />
+      </button>
+      <button class="anim" onclick="anim()">
+        <img src="assets/anim.svg" alt="startAnimation" />
+      </button>
 
-    <button class="options" onclick="toggleControls()"><img src="assets/options.svg" alt="options" /></button>
-    <button class="clear"><img style="width: 50px;" src="assets/clear.svg" alt="clear" /></button>
-    <button class="stop" onclick="stop()"><img src="assets/stop.svg" alt="stopAnimation" /></button>
-    <button class="anim" onclick="anim()"><img src="assets/anim.svg" alt="startAnimation" /></button>
-
-    <div class="Q positiveS" draggable="true">S</div>
-    <div class="Q negativeS" draggable="true">S</div>
-    <div class="Q positiveT" draggable="true">T</div>
-    <div class="Q negativeT" draggable="true">T</div>
-
-  </div>
-</body>
-<script src="core.js"></script>
-<script src="controls.js"></script>
+      <div class="Q positiveS" draggable="true">S</div>
+      <div class="Q negativeS" draggable="true">S</div>
+      <div class="Q positiveT" draggable="true">T</div>
+      <div class="Q negativeT" draggable="true">T</div>
+    </div>
+  </body>
+  <script src="core.js"></script>
+  <script src="controls.js"></script>
 </html>

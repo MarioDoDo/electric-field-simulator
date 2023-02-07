@@ -1,6 +1,8 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: monospace;
+    overflow: hidden;
   }
   body {
     margin: 0;
@@ -12,15 +14,25 @@
   .panel {
     width: 60vw;
     height: 10vh;
-    background: white;
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px gray solid;
+    border-bottom: 0;
     position: absolute;
     bottom: 0;
     left: 20vw;
-    border-radius: 1vw;
+    border-radius: 1vw 1vw 0 0;
     display: grid;
     align-content: center;
     grid-auto-flow: column;
     justify-items: center;
+  }
+
+  .panel *{
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
   }
 
   .Q {
@@ -53,36 +65,49 @@ img{
     cursor: pointer;
   }
   .options{
-    background: none;
     border: none;
-    opacity: 0.5;
   }
   .controls{
       position: absolute;
       width: 20vw;
-      height: 50vh;
-      top: 39vh;
-      left: 20vw;
-      border-radius: 1vw;
-      background: white;
+      height: 100%;
+      top: 0;
+      right: 0;
+      z-index: 20;
+      padding: 10px;
+      background: rgba(20, 20, 20, 0.8);
+      border-left: gray 1px solid;
       display: none;
+      overflow-y: scroll;
+      color: white;
+  }
+  .controls * {
+    color: white;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
   }
   button{
     background: none;
     border: none;
+    cursor: pointer;
   }
   .stop {
     background: none;
     border: none;
-    opacity: 0.5;
   }
   .anim {
     background: none;
     border: none;
-    opacity: 0.5;
   }
   .clear {
     background: none;
     border: none;
-    opacity: 0.5;
+  }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    background: rgba(255, 255, 255, 0.6);
   }

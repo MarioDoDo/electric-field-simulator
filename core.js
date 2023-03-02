@@ -41,8 +41,8 @@ const calculateForce = (t, s) => {
   let x1 = Math.abs(t.x - s.x);
   let y1 = Math.abs(t.y - s.y);
   let alpha = (Math.atan(y1 / x1) * 180) / Math.PI;
-  let r = Math.sqrt(x1 ** 2 + y1 ** 2);
-  let F = (1 / r) * 10000;
+  let r = Math.sqrt(x1 * x1 + y1 ** y1);
+  let F = (1000000 / (r * r));
   let x2 =
     t.x > s.x
       ? (r + F) * Math.cos((alpha * Math.PI) / 180) + s.x
@@ -430,18 +430,22 @@ const addListener = () => {
           T.splice(index, 1);
           moving = false;
         } else {
-          T[index] = { x: event.x, y: event.y, N: charge };
-          target.setAttribute("cx", event.x);
-          target.setAttribute("cy", event.y);
+          let x = event.x === 0 ? 1 : event.x;
+          let y = event.y;
+          T[index] = { x: x, y: y, N: charge };
+          target.setAttribute("cx", x);
+          target.setAttribute("cy", y);
         }
       } else {
         if (S[index].x > panel.offsetLeft && S[index].y > panel.offsetTop && S[index].x < panel.getBoundingClientRect().right) {
           S.splice(index, 1);
           moving = false;
         } else {
-          S[index] = { x: event.x, y: event.y, N: charge };
-          target.setAttribute("cx", event.x);
-          target.setAttribute("cy", event.y);
+          let x = event.x === 0 ? 1 : event.x;
+          let y = event.y;
+          S[index] = { x: x, y: y, N: charge };
+          target.setAttribute("cx", x);
+          target.setAttribute("cy", y);
         }
       }
       draw();

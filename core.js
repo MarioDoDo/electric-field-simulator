@@ -41,7 +41,7 @@ const calculateForce = (t, s) => {
   let x1 = Math.abs(t.x - s.x);
   let y1 = Math.abs(t.y - s.y);
   let alpha = (Math.atan(y1 / x1) * 180) / Math.PI;
-  let r = Math.sqrt(x1 * x1 + y1 ** y1);
+  let r = Math.sqrt(x1 * x1 + y1 * y1);
   let F = (1000000 / (r * r));
   let x2 =
     t.x > s.x

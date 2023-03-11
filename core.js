@@ -140,6 +140,7 @@ const draw = () => {
   let Tmass = document.getElementById("Tmass").checked;
   let grid = document.getElementById("grid").checked;
   let fieldLines = document.getElementById("fieldLines").checked;
+  let normArrows = document.getElementById("normArrows").checked;
   clear();
   if (grid) {
     makeGrid();
@@ -153,8 +154,15 @@ const draw = () => {
       if (S[j].x) {
         let force = calculateForce(T[i], S[j]);
         drawCharge(S[j].x, S[j].y, 30, S[j].N ? colors.negative : colors.positive);
+
         if (force.x && force.y && T[i].x) {
-          drawForce(T[i].x, T[i].y, force.x, force.y, colors.secondaryVector);
+          if (normArrows) {
+            let normX = norm(force.x - T[i].x, force.y - T[i].y) * 80 + T[i].x;
+            let normY = norm(force.y - T[i].y, force.x - T[i].x) * 80 + T[i].y;
+            drawForce(T[i].x, T[i].y, normX, normY, colors.secondaryVector);
+          } else {
+            drawForce(T[i].x, T[i].y, force.x, force.y, colors.secondaryVector);
+          }
           vectors.push({ x: force.x, y: force.y });
         }
       }
@@ -164,7 +172,13 @@ const draw = () => {
         for (let k = 0; k < T.length; k++) {
           let force = calculateForce(T[i], T[k]);
           if (force.x && force.y) {
-            drawForce(T[i].x, T[i].y, force.x, force.y, colors.secondaryVector);
+            if (normArrows) {
+              let normX = norm(force.x - T[i].x, force.y - T[i].y) * 80 + T[i].x;
+              let normY = norm(force.y - T[i].y, force.x - T[i].x) * 80 + T[i].y;
+              drawForce(T[i].x, T[i].y, normX, normY, colors.secondaryVector);
+            } else {
+              drawForce(T[i].x, T[i].y, force.x, force.y, colors.secondaryVector);
+            }
             vectors.push({ x: force.x, y: force.y });
           }
         }
@@ -176,10 +190,14 @@ const draw = () => {
         sumY += vector.y - T[i].y;
       });
       vectors = [];
-      T[i].forceX = sumX;
-      T[i].forceY = sumY;
+      T[i].forceX = sumX, sumY;
+      T[i].forceY = sumY, sumX;
 
-      drawForce(T[i].x, T[i].y, T[i].x + sumX, T[i].y + sumY, colors.primaryVector);
+      if (normArrows) {
+        drawForce(T[i].x, T[i].y, T[i].x + norm(sumX, sumY) * 80, T[i].y + norm(sumY, sumX) * 80, colors.primaryVector);
+      } else {
+        drawForce(T[i].x, T[i].y, T[i].x + sumX, T[i].y + sumY, colors.primaryVector);
+      }
       drawCharge(T[i].x, T[i].y, 20, T[i].N ? colors.negative : colors.positive);
     }
   }
@@ -403,7 +421,6 @@ document
 
 const addListener = () => {
   let moving = false;
-  let finalCheck = false;
   let target;
   let panel = document.querySelector(".panel");
   document.querySelectorAll("circle").forEach((charge) => {
@@ -415,7 +432,6 @@ const addListener = () => {
   });
   window.addEventListener("mouseup", () => {
     moving = false;
-    finalCheck = true;
     panel.style.background = "rgba(20, 20, 20, 0.8)";
   });
   window.addEventListener("mousemove", (event) => {
@@ -478,7 +494,7 @@ const makeGrid = () => {
   let Tmass = document.getElementById("Tmass").checked;
   for (let i = 20; i < window.innerWidth; i += 100) {
     for (let j = 20; j < window.innerHeight; j += 100) {
-      if (S.length > 1 || T.length > 1) {
+      if (S.length > 1 || (T.length > 1 && Tmass)) {
         let vectors = [];
         for (let a = 1; a < S.length; a++) {
           vectors.push(calculateForce({ x: i, y: j, N: false }, S[a]));

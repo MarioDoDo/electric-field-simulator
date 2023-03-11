@@ -38,6 +38,7 @@ syncInputs();
 const resetSettings = () => {
   document.getElementById("Tmass").checked = false;
   document.getElementById("staticEnd").checked = true;
+  document.getElementById("normArrows").checked = false;
   document.getElementById("grid").checked = false;
   document.getElementById("fieldLines").checked = true;
   document.getElementById("linesCount").value = 11;

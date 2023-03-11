@@ -35,6 +35,18 @@ const syncInputs = () => {
 }
 syncInputs();
 
+const resetSettings = () => {
+  document.getElementById("Tmass").checked = false;
+  document.getElementById("staticEnd").checked = true;
+  document.getElementById("grid").checked = false;
+  document.getElementById("fieldLines").checked = true;
+  document.getElementById("linesCount").value = 11;
+  document.getElementById("length").value = 110;
+  document.getElementById("linesQuality").value = 6;
+  document.getElementById("speed").value = 15;
+  draw();
+}
+
 
 //force between two charges
 const calculateForce = (t, s) => {
@@ -42,7 +54,7 @@ const calculateForce = (t, s) => {
   let y1 = Math.abs(t.y - s.y);
   let alpha = (Math.atan(y1 / x1) * 180) / Math.PI;
   let r = Math.sqrt(x1 * x1 + y1 * y1);
-  let F = (1000000 / (r * r));
+  let F = (10000000 / (r * r));
   let x2 =
     t.x > s.x
       ? (r + F) * Math.cos((alpha * Math.PI) / 180) + s.x
@@ -51,7 +63,7 @@ const calculateForce = (t, s) => {
     t.y > s.y
       ? (r + F) * Math.sin((alpha * Math.PI) / 180) + s.y
       : -(r + F) * Math.sin((alpha * Math.PI) / 180) + s.y;
-  if ((s.N && !t.N) || (!s.N && t.N)) {
+  if (s.N === !t.N) {
     x2 = -x2 + 2 * t.x;
     y2 = -y2 + 2 * t.y;
   }
@@ -177,7 +189,7 @@ const draw = () => {
 const drawFieldLines = () => {
   let Tmass = document.getElementById("Tmass").checked;
   clear(false, true);
-  let lenght = document.getElementById("lenght").value;
+  let length = document.getElementById("length").value;
   let linesCount = document.getElementById("linesCount").value;
   let linesQuality = document.getElementById("linesQuality").value;
   let vectors = [];
@@ -198,12 +210,12 @@ const drawFieldLines = () => {
       };
 
 
-      let test = distributePoints(linesCount, k < S.lenght ? 30 : 20, {
+      let test = distributePoints(linesCount, k < S.length ? 30 : 20, {
         x: all[k].x,
         y: all[k].y,
       });
 
-      for (let l = 0; l < lenght; l++) {
+      for (let l = 0; l < length; l++) {
         let c = document.createElementNS(
           "http://www.w3.org/2000/svg",
           "path"
@@ -247,9 +259,9 @@ const drawFieldLines = () => {
                 );
 
                 test[i].x +=
-                  (sumX / Math.sqrt(sumX ** 2 + sumY ** 2)) * linesQuality;
+                  norm(sumX, sumY) * linesQuality;
                 test[i].y +=
-                  (sumY / Math.sqrt(sumX ** 2 + sumY ** 2)) * linesQuality;
+                  norm(sumY, sumX) * linesQuality;
                 c.setAttribute(
                   "d",
                   c.getAttribute("d") + `L${test[i].x},${test[i].y}`
@@ -274,7 +286,15 @@ const setSpeed = () => {
     anim();
   }
 };
+const resetAnim = () => {
+  clear(true, true);
+  S = JSON.parse(localStorage.getItem("S"));
+  T = JSON.parse(localStorage.getItem("T"));
+  draw();
+}
 const anim = () => {
+  localStorage.setItem("S", JSON.stringify(S));
+  localStorage.setItem("T", JSON.stringify(T));
   if (interval) {
     clearInterval(interval);
   }
@@ -476,12 +496,16 @@ const makeGrid = () => {
           sumY += vector.y - j;
         });
 
-        drawForce(i, j, i - (sumX / Math.sqrt(sumX ** 2 + sumY ** 2)) * 10, j - (sumY / Math.sqrt(sumX ** 2 + sumY ** 2)) * 10, colors.positiveGrid, true);
-        drawForce(i, j, i + (sumX / Math.sqrt(sumX ** 2 + sumY ** 2)) * 10, j + (sumY / Math.sqrt(sumX ** 2 + sumY ** 2)) * 10, colors.negativeGrid, true);
+        drawForce(i, j, i - norm(sumX, sumY) * 10, j - norm(sumY, sumX) * 10, colors.positiveGrid, true);
+        drawForce(i, j, i + norm(sumX, sumY) * 10, j + norm(sumY, sumX) * 10, colors.negativeGrid, true);
         drawCharge(i, j, 3, colors.gridCenter);
       }
     }
   }
+}
+
+const norm = (a, b) => {
+  return a / Math.sqrt(a * a + b * b);
 }
 
 /*

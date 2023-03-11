@@ -73,7 +73,7 @@ img{
       height: 100%;
       top: 0;
       right: 0;
-      z-index: 20;
+      z-index: 10;
       padding: 10px;
       background: rgba(20, 20, 20, 0.8);
       border-left: gray 1px solid;
@@ -106,8 +106,15 @@ img{
     background: none;
     border: none;
   }
-
+  .gray {
+    background: gray;
+    color: white;
+    width: 100%;
+    height: 20px;
+    margin-top: 10px;
+  }
   input[type="range"] {
     -webkit-appearance: none;
     background: rgba(255, 255, 255, 0.6);
+    width: 100%;
   }

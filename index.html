@@ -57,92 +57,172 @@
       </defs>
     </svg>
     <div class="controls">
-      <label>Test charges have mass</label>
-      <input id="Tmass" type="checkbox" oninput="draw()" />
-
-      <label>Interval tick</label>
-      <input id="speed" type="range" min="5" max="30" oninput="setSpeed()" />
-
-      <label>Test charges are removed in oposite static charge</label>
-      <input id="staticEnd" type="checkbox" checked />
-      <label>Grid</label>
-      <input id="grid" type="checkbox" oninput="draw()" />
-      <label>Field lines</label>
-      <input id="fieldLines" type="checkbox" oninput="draw()" checked />
-      <label>Density of field lines</label>
-      <input id="linesCount" type="range" min="5" max="20" oninput="draw()" />
-      <label>Steps</label>
-      <input id="lenght" type="range" min="20" max="200" oninput="draw()" />
-      <label>Step length</label>
-      <input id="linesQuality" min="1" max="15" type="range" oninput="draw()" />
-
-      <label>Background</label>
-      <input id="background" type="color" oninput="bgChange(this.value)" />
-      <label>Color of field Lines</label>
-      <input
-        id="fieldLinesColor"
-        type="color"
-        oninput="change(this.value, 'fieldLinesColor')"
-      />
-      <label>Primary vector</label>
-      <input
-        id="primaryVector"
-        type="color"
-        oninput="change(this.value, 'primaryVector')"
-      />
-      <label>Secondary vector</label>
-      <input
-        id="secondaryVector"
-        type="color"
-        oninput="change(this.value, 'secondaryVector')"
-      />
-      <label>Color of positive charge</label>
-      <input
-        id="positive"
-        type="color"
-        oninput="change(this.value, 'positive')"
-      />
-      <label>Color of negative charge</label>
-      <input
-        id="negative"
-        type="color"
-        oninput="change(this.value, 'negative')"
-      />
-      <label>Color of centerGrid</label>
-      <input
-        id="gridCenter"
-        type="color"
-        oninput="change(this.value, 'gridCenter')"
-      />
-      <label>Color of positiveGrid</label>
-      <input
-        id="positiveGrid"
-        type="color"
-        oninput="change(this.value, 'positiveGrid')"
-      />
-      <label>Color of negativeGrid</label>
-      <input
-        id="negativeGrid"
-        type="color"
-        oninput="change(this.value, 'negativeGrid')"
-      />
-
       <div>
-        <button onclick="resetColors('dark')">Dark</button>
-        <button onclick="resetColors('light')">Light</button>
+        <input id="Tmass" type="checkbox" oninput="draw()" />
+        <label for="Tmass">Test charges have mass</label>
       </div>
 
-      <label>Save as svg</label>
+      <div>
+        <input id="staticEnd" type="checkbox" checked />
+        <label for="staticEnd"
+          >Test charges are removed in oposite static charge</label
+        >
+      </div>
+
+      <div>
+        <input id="grid" type="checkbox" oninput="draw()" />
+        <label for="grid">Grid</label>
+      </div>
+
+      <div>
+        <input id="fieldLines" type="checkbox" oninput="draw()" checked />
+        <label for="fieldLines">Field lines</label>
+      </div>
+
+      <div>
+        <label for="linesCount">Density of field lines</label><br />
+        <input
+          id="linesCount"
+          type="range"
+          min="5"
+          max="20"
+          value="11"
+          oninput="draw()"
+        />
+      </div>
+
+      <div>
+        <label>Steps</label><br />
+        <input
+          id="length"
+          type="range"
+          min="20"
+          max="200"
+          value="110"
+          oninput="draw()"
+        />
+      </div>
+
+      <div>
+        <label>Step length</label>
+        <input
+          id="linesQuality"
+          min="1"
+          max="12"
+          value="6"
+          type="range"
+          oninput="draw()"
+        />
+      </div>
+
+      <div>
+        <label for="speed">Interval tick</label>
+        <input id="speed" type="range" min="5" max="30" oninput="setSpeed()" />
+      </div>
+
+      <button onclick="resetSettings('dark')" class="gray">
+        Reset settings
+      </button>
+
+      <div>
+        <input id="background" type="color" oninput="bgChange(this.value)" />
+        <label for="background">Background</label>
+      </div>
+
+      <div>
+        <input
+          id="fieldLinesColor"
+          type="color"
+          oninput="change(this.value, 'fieldLinesColor')"
+        />
+        <label for="fieldLinesColor">Color of field Lines</label>
+      </div>
+      <div>
+        <input
+          id="primaryVector"
+          type="color"
+          oninput="change(this.value, 'primaryVector')"
+        />
+        <label for="primaryVector">Primary vector</label>
+      </div>
+
+      <div>
+        <input
+          id="secondaryVector"
+          type="color"
+          oninput="change(this.value, 'secondaryVector')"
+        />
+        <label for="secondaryVector">Secondary vector</label>
+      </div>
+
+      <div>
+        <input
+          id="positive"
+          type="color"
+          oninput="change(this.value, 'positive')"
+        />
+        <label for="positive">Color of positive charge</label>
+      </div>
+
+      <div>
+        <input
+          id="negative"
+          type="color"
+          oninput="change(this.value, 'negative')"
+        />
+        <label for="negative">Color of negative charge</label>
+      </div>
+
+      <div>
+        <input
+          id="gridCenter"
+          type="color"
+          oninput="change(this.value, 'gridCenter')"
+        />
+        <label for="gridCenter">Color of centerGrid</label>
+      </div>
+
+      <div>
+        <input
+          id="positiveGrid"
+          type="color"
+          oninput="change(this.value, 'positiveGrid')"
+        />
+        <label for="positiveGrid">Color of positiveGrid</label>
+      </div>
+
+      <div>
+        <input
+          id="negativeGrid"
+          type="color"
+          oninput="change(this.value, 'negativeGrid')"
+        />
+        <label>Color of negativeGrid</label>
+      </div>
+
+      <div style="text-align: center">
+        <button onclick="resetColors('dark')" class="gray" style="width: 48%">
+          Dark theme
+        </button>
+        <button onclick="resetColors('light')" class="gray" style="width: 48%">
+          Light theme
+        </button>
+      </div>
+
       <button class="save" onclick="save()">
         <img style="width: 10%" src="assets/save.svg" alt="saveAsSVG" />
       </button>
     </div>
+
     <div class="panel">
       <button class="options" onclick="toggleControls()">
         <img src="assets/options.svg" alt="options" />
       </button>
       <button class="clear">
-        <img style="width: 50px" src="assets/clear.svg" alt="clear" />
+        <img src="assets/remove.svg" alt="clear" />
+      </button>
+      <button class="reset" onclick="resetAnim()">
+        <img src="assets/reset.svg" alt="resetAnimation" />
       </button>
       <button class="stop" onclick="stop()">
         <img src="assets/stop.svg" alt="stopAnimation" />
@@ -157,6 +237,7 @@
       <div class="Q negativeT" draggable="true">T</div>
     </div>
   </body>
+
   <script src="core.js"></script>
   <script src="controls.js"></script>
 </html>
